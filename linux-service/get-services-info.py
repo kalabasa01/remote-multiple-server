@@ -2,17 +2,14 @@ from netmiko import ConnectHandler
 from netmiko.exceptions import NetmikoTimeoutException, NetmikoAuthenticationException
 
 def linux_device(hostIP):
-    server_config = {
-        "device_type": "linux",
-        "host": hostIP,
-        "username": "admin",
-        "password": "mypassword",
-        "secret": "mypassword",
-        "port": 22,
-    }
-
     try:
-        net_connect = ConnectHandler(**server_config)
+        net_connect = ConnectHandler(
+            device_type="linux",
+            host=hostIP,
+            username="admin",
+            password="mypassword",
+            secret="mypassword"
+        )
         net_connect.enable()
 
         services = ["my-test.service","my-test2.service"]
@@ -34,15 +31,15 @@ def linux_device(hostIP):
         net_connect.disconnect()
 
     except NetmikoTimeoutException:
-        print(f"Connection Timeout: Could not reach {server_config['host']}.\n")
+        print(f"Connection Timeout: Could not reach the server.\n")
     except NetmikoAuthenticationException:
-        print(f"Authentication Failed: Check username/password for {server_config['host']}.\n")
+        print(f"Authentication Failed: Check username/password.\n")
     except Exception as e:
-        print(f"An error occurred while processing {server_config['host']}: {e}\n")
+        print(f"An error occurred while processing: {e}\n")
 
 # Execution
 print("\n---- Script is running ----\n")
-host_addresses = ["0.0.0.0", "1.1.1.1"]
+host_addresses = ["0.0.0.0", "0.0.0.0"]
 for hostIP in host_addresses:
     linux_device(hostIP)
 
