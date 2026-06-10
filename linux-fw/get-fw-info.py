@@ -6,9 +6,10 @@ def linux_device(hostIP):
         net_connect = ConnectHandler(
             device_type="linux",
             host=hostIP,
-            username="jemar",
-            password="pass.123",
-            secret="pass.123"
+            username="admin",
+            password="mypassword",
+            secret="mypassword",
+            port=22
         )
         net_connect.enable()
 
@@ -38,6 +39,6 @@ def linux_device(hostIP):
         print(f"Error on {hostIP}: {e}\n")
 
 # Execution
-host_addresses = ["192.168.122.146", "192.168.122.147"]
+host_addresses = ["0.0.0.0", "0.0.0.0"]
 for hostIP in host_addresses:
     linux_device(hostIP)
