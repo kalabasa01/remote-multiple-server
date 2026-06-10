@@ -5,9 +5,9 @@ def linux_device(hostIP):
     server_config = {
         "device_type": "linux",
         "host": hostIP,
-        "username": "jemar",
-        "password": "pass.123",
-        "secret": "pass.123",
+        "username": "admin",
+        "password": "mypassword",
+        "secret": "mypassword",
         "port": 22,
     }
 
@@ -15,7 +15,7 @@ def linux_device(hostIP):
         net_connect = ConnectHandler(**server_config)
         net_connect.enable()
 
-        services = ["my-test.service","sshd.service"]
+        services = ["my-test.service","my-test2.service"]
         for service_name in services:
             is_enabled = net_connect.send_command(
                             f"systemctl is-enabled {service_name} || sudo systemctl enable --now {service_name}",
@@ -42,7 +42,7 @@ def linux_device(hostIP):
 
 # Execution
 print("\n---- Script is running ----\n")
-host_addresses = ["192.168.122.146", "192.168.122.147"]
+host_addresses = ["0.0.0.0", "1.1.1.1"]
 for hostIP in host_addresses:
     linux_device(hostIP)
 
